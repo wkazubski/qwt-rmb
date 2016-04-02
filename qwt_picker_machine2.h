@@ -10,16 +10,16 @@
 #ifndef QWT_PICKER_MACHINE2
 #define QWT_PICKER_MACHINE2 1
 
-#include <qwt_global.h>
+#include "qwt_global.h"
 #include <qlist.h>
 
 class QEvent;
 class QwtEventPattern;
 
 /*!
-  \brief A state machine for QwtPicker2 selections
+  \brief A state machine for QwtPicker selections
 
-  QwtPicker2Machine accepts key and mouse events and translates them
+  QwtPickerMachine accepts key and mouse events and translates them
   into selection commands.
 
   \sa QwtEventPattern::MousePatternCode, QwtEventPattern::KeyPatternCode
@@ -78,7 +78,7 @@ private:
 /*!
   \brief A state machine for indicating mouse movements
 
-  QwtPicker2TrackerMachine supports displaying information
+  QwtPickerTrackerMachine supports displaying information
   corresponding to mouse movements, but is not intended for
   selecting anything. Begin/End are related to Enter/Leave events.
 */
@@ -94,7 +94,7 @@ public:
 /*!
   \brief A state machine for point selections
 
-  Pressing QwtEventPattern::MouseSelect2 or
+  Pressing QwtEventPattern::MouseSelect1 or
   QwtEventPattern::KeySelect1 selects a point.
 
   \sa QwtEventPattern::MousePatternCode, QwtEventPattern::KeyPatternCode
@@ -111,8 +111,8 @@ public:
 /*!
   \brief A state machine for point selections
 
-  Pressing QwtEventPattern::MouseSelect2 or QwtEventPattern::KeySelect1
-  starts the selection, releasing QwtEventPattern::MouseSelect2 or
+  Pressing QwtEventPattern::MouseSelect1 or QwtEventPattern::KeySelect1
+  starts the selection, releasing QwtEventPattern::MouseSelect1 or
   a second press of QwtEventPattern::KeySelect1 terminates it.
 */
 class QWT_EXPORT QwtPicker2DragPointMachine: public QwtPicker2Machine
@@ -127,7 +127,7 @@ public:
 /*!
   \brief A state machine for rectangle selections
 
-  Pressing QwtEventPattern::MouseSelect2 starts
+  Pressing QwtEventPattern::MouseSelect1 starts
   the selection, releasing it selects the first point. Pressing it
   again selects the second point and terminates the selection.
   Pressing QwtEventPattern::KeySelect1 also starts the
@@ -149,7 +149,7 @@ public:
 /*!
   \brief A state machine for rectangle selections
 
-  Pressing QwtEventPattern::MouseSelect2 selects
+  Pressing QwtEventPattern::MouseSelect1 selects
   the first point, releasing it the second point.
   Pressing QwtEventPattern::KeySelect1 also selects the
   first point, a second press selects the second point and terminates
@@ -168,11 +168,35 @@ public:
 };
 
 /*!
+  \brief A state machine for line selections
+    
+  Pressing QwtEventPattern::MouseSelect1 selects
+  the first point, releasing it the second point.
+  Pressing QwtEventPattern::KeySelect1 also selects the
+  first point, a second press selects the second point and terminates
+  the selection.
+
+  A common use case of QwtPickerDragLineMachine are pickers for
+  distance measurements.
+  
+  \sa QwtEventPattern::MousePatternCode, QwtEventPattern::KeyPatternCode
+*/              
+                    
+class QWT_EXPORT QwtPicker2DragLineMachine: public QwtPicker2Machine
+{
+public:
+    QwtPicker2DragLineMachine();
+
+    virtual QList<Command> transition(
+        const QwtEventPattern &, const QEvent * );
+};
+
+/*!
   \brief A state machine for polygon selections
 
-  Pressing QwtEventPattern::MouseSelect2 or QwtEventPattern::KeySelect1
+  Pressing QwtEventPattern::MouseSelect1 or QwtEventPattern::KeySelect1
   starts the selection and selects the first point, or appends a point.
-  Pressing QwtEventPattern::MouseSelect3 or QwtEventPattern::KeySelect2
+  Pressing QwtEventPattern::MouseSelect2 or QwtEventPattern::KeySelect2
   appends the last point and terminates the selection.
 
   \sa QwtEventPattern::MousePatternCode, QwtEventPattern::KeyPatternCode

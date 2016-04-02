@@ -97,16 +97,16 @@ QwtPicker2ClickPointMachine::QwtPicker2ClickPointMachine():
 
 //! Transition
 QList<QwtPicker2Machine::Command> QwtPicker2ClickPointMachine::transition(
-    const QwtEventPattern &eventPattern, const QEvent *e )
+    const QwtEventPattern &eventPattern, const QEvent *event )
 {
     QList<QwtPicker2Machine::Command> cmdList;
 
-    switch ( e->type() )
+    switch ( event->type() )
     {
         case QEvent::MouseButtonPress:
         {
-            if ( eventPattern.mouseMatch(
-                QwtEventPattern::MouseSelect2, ( const QMouseEvent * )e ) )
+            if ( eventPattern.mouseMatch( QwtEventPattern::MouseSelect2,
+                static_cast<const QMouseEvent *>( event ) ) )
             {
                 cmdList += Begin;
                 cmdList += Append;
@@ -116,8 +116,8 @@ QList<QwtPicker2Machine::Command> QwtPicker2ClickPointMachine::transition(
         }
         case QEvent::KeyPress:
         {
-            if ( eventPattern.keyMatch(
-                QwtEventPattern::KeySelect1, ( const QKeyEvent * )e ) )
+            if ( eventPattern.keyMatch( QwtEventPattern::KeySelect1,
+                static_cast<const QKeyEvent *> ( event ) ) )
             {
                 cmdList += Begin;
                 cmdList += Append;
@@ -140,16 +140,16 @@ QwtPicker2DragPointMachine::QwtPicker2DragPointMachine():
 
 //! Transition
 QList<QwtPicker2Machine::Command> QwtPicker2DragPointMachine::transition(
-    const QwtEventPattern &eventPattern, const QEvent *e )
+    const QwtEventPattern &eventPattern, const QEvent *event )
 {
     QList<QwtPicker2Machine::Command> cmdList;
 
-    switch ( e->type() )
+    switch ( event->type() )
     {
         case QEvent::MouseButtonPress:
         {
-            if ( eventPattern.mouseMatch(
-                QwtEventPattern::MouseSelect2, ( const QMouseEvent * )e ) )
+            if ( eventPattern.mouseMatch( QwtEventPattern::MouseSelect2,
+                static_cast<const QMouseEvent *>( event ) ) )
             {
                 if ( state() == 0 )
                 {
@@ -178,8 +178,8 @@ QList<QwtPicker2Machine::Command> QwtPicker2DragPointMachine::transition(
         }
         case QEvent::KeyPress:
         {
-            if ( eventPattern.keyMatch(
-                QwtEventPattern::KeySelect1, ( const QKeyEvent * )e ) )
+            if ( eventPattern.keyMatch( QwtEventPattern::KeySelect1, 
+                static_cast<const QKeyEvent *>( event ) ) )
             {
                 if ( state() == 0 )
                 {
@@ -210,16 +210,16 @@ QwtPicker2ClickRectMachine::QwtPicker2ClickRectMachine():
 
 //! Transition
 QList<QwtPicker2Machine::Command> QwtPicker2ClickRectMachine::transition(
-    const QwtEventPattern &eventPattern, const QEvent *e )
+    const QwtEventPattern &eventPattern, const QEvent *event )
 {
     QList<QwtPicker2Machine::Command> cmdList;
 
-    switch ( e->type() )
+    switch ( event->type() )
     {
         case QEvent::MouseButtonPress:
         {
-            if ( eventPattern.mouseMatch(
-                QwtEventPattern::MouseSelect2, ( const QMouseEvent * )e ) )
+            if ( eventPattern.mouseMatch( QwtEventPattern::MouseSelect2,
+                static_cast<const QMouseEvent *>( event ) ) )
             {
                 switch ( state() )
                 {
@@ -252,8 +252,8 @@ QList<QwtPicker2Machine::Command> QwtPicker2ClickRectMachine::transition(
         }
         case QEvent::MouseButtonRelease:
         {
-            if ( eventPattern.mouseMatch(
-                QwtEventPattern::MouseSelect2, ( const QMouseEvent * )e ) )
+            if ( eventPattern.mouseMatch( QwtEventPattern::MouseSelect2,
+                static_cast<const QMouseEvent *>( event ) ) )
             {
                 if ( state() == 1 )
                 {
@@ -265,8 +265,8 @@ QList<QwtPicker2Machine::Command> QwtPicker2ClickRectMachine::transition(
         }
         case QEvent::KeyPress:
         {
-            if ( eventPattern.keyMatch(
-                QwtEventPattern::KeySelect1, ( const QKeyEvent * )e ) )
+            if ( eventPattern.keyMatch( QwtEventPattern::KeySelect1, 
+                static_cast<const QKeyEvent *> ( event ) ) )
             {
                 if ( state() == 0 )
                 {
@@ -305,16 +305,16 @@ QwtPicker2DragRectMachine::QwtPicker2DragRectMachine():
 
 //! Transition
 QList<QwtPicker2Machine::Command> QwtPicker2DragRectMachine::transition(
-    const QwtEventPattern &eventPattern, const QEvent *e )
+    const QwtEventPattern &eventPattern, const QEvent *event )
 {
     QList<QwtPicker2Machine::Command> cmdList;
 
-    switch ( e->type() )
+    switch ( event->type() )
     {
         case QEvent::MouseButtonPress:
         {
-            if ( eventPattern.mouseMatch(
-                QwtEventPattern::MouseSelect2, ( const QMouseEvent * )e ) )
+            if ( eventPattern.mouseMatch( QwtEventPattern::MouseSelect2,
+                static_cast<const QMouseEvent *>( event ) ) )
             {
                 if ( state() == 0 )
                 {
@@ -344,8 +344,8 @@ QList<QwtPicker2Machine::Command> QwtPicker2DragRectMachine::transition(
         }
         case QEvent::KeyPress:
         {
-            if ( eventPattern.keyMatch(
-                QwtEventPattern::KeySelect1, ( const QKeyEvent * )e ) )
+            if ( eventPattern.keyMatch( QwtEventPattern::KeySelect1, 
+                static_cast<const QKeyEvent *> ( event ) ) )
             {
                 if ( state() == 0 )
                 {
@@ -377,16 +377,16 @@ QwtPicker2PolygonMachine::QwtPicker2PolygonMachine():
 
 //! Transition
 QList<QwtPicker2Machine::Command> QwtPicker2PolygonMachine::transition(
-    const QwtEventPattern &eventPattern, const QEvent *e )
+    const QwtEventPattern &eventPattern, const QEvent *event )
 {
     QList<QwtPicker2Machine::Command> cmdList;
 
-    switch ( e->type() )
+    switch ( event->type() )
     {
         case QEvent::MouseButtonPress:
         {
-            if ( eventPattern.mouseMatch(
-                QwtEventPattern::MouseSelect2, ( const QMouseEvent * )e ) )
+            if ( eventPattern.mouseMatch( QwtEventPattern::MouseSelect2,
+                static_cast<const QMouseEvent *>( event ) ) )
             {
                 if ( state() == 0 )
                 {
@@ -397,15 +397,17 @@ QList<QwtPicker2Machine::Command> QwtPicker2PolygonMachine::transition(
                 }
                 else
                 {
+                    cmdList += Append;
+                }
+            }
+            if ( eventPattern.mouseMatch( QwtEventPattern::MouseSelect2, 
+                static_cast<const QMouseEvent *>( event ) ) )
+            {
+                if ( state() == 1 )
+                {
                     cmdList += End;
                     setState( 0 );
                 }
-            }
-            if ( eventPattern.mouseMatch(
-                QwtEventPattern::MouseSelect3, ( const QMouseEvent * )e ) )
-            {
-                if ( state() == 1 )
-                    cmdList += Append;
             }
             break;
         }
@@ -418,8 +420,72 @@ QList<QwtPicker2Machine::Command> QwtPicker2PolygonMachine::transition(
         }
         case QEvent::KeyPress:
         {
-            if ( eventPattern.keyMatch(
-                QwtEventPattern::KeySelect1, ( const QKeyEvent * )e ) )
+            if ( eventPattern.keyMatch( QwtEventPattern::KeySelect1, 
+                static_cast<const QKeyEvent *> ( event ) ) )
+            {
+                if ( state() == 0 )
+                {
+                    cmdList += Begin;
+                    cmdList += Append;
+                    cmdList += Append;
+                    setState( 1 );
+                }
+                else
+                {
+                    cmdList += Append;
+                }
+            }
+            else if ( eventPattern.keyMatch( QwtEventPattern::KeySelect2, 
+                static_cast<const QKeyEvent *> ( event ) ) )
+            {
+                if ( state() == 1 )
+                {
+                    cmdList += End;
+                    setState( 0 );
+                }
+            }
+            break;
+        }
+        default:
+            break;
+    }
+
+    return cmdList;
+}
+
+//! Constructor
+QwtPicker2DragLineMachine::QwtPicker2DragLineMachine():
+    QwtPicker2Machine( PolygonSelection )
+{
+}
+
+//! Transition
+QList<QwtPicker2Machine::Command> QwtPicker2DragLineMachine::transition(
+    const QwtEventPattern &eventPattern, const QEvent *event )
+{
+    QList<QwtPicker2Machine::Command> cmdList;
+
+    switch( event->type() )
+    {
+        case QEvent::MouseButtonPress:
+        {
+            if ( eventPattern.mouseMatch( QwtEventPattern::MouseSelect2,
+                static_cast<const QMouseEvent *>( event ) ) )
+            {
+                if ( state() == 0 )
+                {
+                    cmdList += Begin;
+                    cmdList += Append;
+                    cmdList += Append;
+                    setState( 1 );
+                }
+            }
+            break;
+        }
+        case QEvent::KeyPress:
+        {
+            if ( eventPattern.keyMatch( QwtEventPattern::KeySelect1,
+                static_cast<const QKeyEvent *> ( event ) ) )
             {
                 if ( state() == 0 )
                 {
@@ -434,13 +500,23 @@ QList<QwtPicker2Machine::Command> QwtPicker2PolygonMachine::transition(
                     setState( 0 );
                 }
             }
-            else if ( eventPattern.keyMatch(
-                QwtEventPattern::KeySelect2, ( const QKeyEvent * )e ) )
-            {
-                if ( state() == 1 )
-                    cmdList += Append;
-            }
             break;
+        }
+        case QEvent::MouseMove:
+        case QEvent::Wheel:
+        {
+            if ( state() != 0 )
+                cmdList += Move;
+
+            break;
+        }
+        case QEvent::MouseButtonRelease:
+        {
+            if ( state() != 0 )
+            {
+                cmdList += End;
+                setState( 0 );
+            }
         }
         default:
             break;

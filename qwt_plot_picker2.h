@@ -10,19 +10,18 @@
 #ifndef QWT_PLOT_PICKER2_H
 #define QWT_PLOT_PICKER2_H
 
-#include <qwt_global.h>
-#include <qwt_plot_canvas.h>
+#include "qwt_global.h"
 #include "qwt_picker2.h"
 #include <qvector.h>
 
 class QwtPlot;
 
 /*!
-  \brief QwtPlotPicker2 provides selections on a plot canvas
+  \brief QwtPlotPicker provides selections on a plot canvas
 
-  QwtPlotPicker2 is a QwtPicker2 tailored for selections on
+  QwtPlotPicker is a QwtPicker tailored for selections on
   a plot canvas. It is set to a x-Axis and y-Axis and
-  translates all pixel coordinates into this coodinate system.
+  translates all pixel coordinates into this coordinate system.
 */
 
 class QWT_EXPORT QwtPlotPicker2: public QwtPicker2
@@ -30,14 +29,13 @@ class QWT_EXPORT QwtPlotPicker2: public QwtPicker2
     Q_OBJECT
 
 public:
-    explicit QwtPlotPicker2( QwtPlotCanvas * );
+    explicit QwtPlotPicker2( QWidget *canvas );
     virtual ~QwtPlotPicker2();
 
-    explicit QwtPlotPicker2( int xAxis, int yAxis, QwtPlotCanvas * );
+    explicit QwtPlotPicker2( int xAxis, int yAxis, QWidget * );
 
     explicit QwtPlotPicker2( int xAxis, int yAxis,
-        RubberBand rubberBand, DisplayMode trackerMode,
-        QwtPlotCanvas * );
+        RubberBand rubberBand, DisplayMode trackerMode, QWidget * );
 
     virtual void setAxis( int xAxis, int yAxis );
 
@@ -47,19 +45,19 @@ public:
     QwtPlot *plot();
     const QwtPlot *plot() const;
 
-    QwtPlotCanvas *canvas();
-    const QwtPlotCanvas *canvas() const;
+    QWidget *canvas();
+    const QWidget *canvas() const;
 
 Q_SIGNALS:
 
     /*!
-      A signal emitted in case of selectionFlags() & PointSelection.
+      A signal emitted in case of QwtPickerMachine::PointSelection.
       \param pos Selected point
     */
     void selected( const QPointF &pos );
 
     /*!
-      A signal emitted in case of selectionFlags() & RectSelection.
+      A signal emitted in case of QwtPickerMachine::RectSelection.
       \param rect Selected rectangle
     */
     void selected( const QRectF &rect );

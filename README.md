@@ -19,7 +19,7 @@ Copyright
     Copyright (C) 1997   Josef Wilgen
     Copyright (C) 2002   Uwe Rathmann
 
-    mods by Wojciech Kazubski 2013-2014
+    mods by Wojciech Kazubski 2013-2015
 
     Qwt-rmb is published under the Qwt License, Version 1.0.
     You should have received a copy of this licence in the file

@@ -11,9 +11,7 @@
 #include "qwt_picker_machine2.h"
 #include "qwt_painter.h"
 #include "qwt_math.h"
-#if QWT_VERSION >= 0x060100
 #include "qwt_widget_overlay.h"
-#endif
 #include <qapplication.h>
 #include <qevent.h>
 #include <qpainter.h>
@@ -106,7 +104,7 @@ public:
         openGL( false )
     {
     }
-
+        
     bool enabled;
 
     QwtPicker2Machine *stateMachine;
@@ -780,8 +778,7 @@ void QwtPicker2::drawTracker( QPainter *painter ) const
   \param points Selected points
   \return Selected points unmodified
 */
-QPolygon 
-QwtPicker2::adjustedPoints( const QPolygon &points ) const
+QPolygon QwtPicker2::adjustedPoints( const QPolygon &points ) const
 {
     return points;
 }
@@ -900,9 +897,23 @@ bool QwtPicker2::eventFilter( QObject *object, QEvent *event )
             case QEvent::Resize:
             {
                 const QResizeEvent *re = static_cast<QResizeEvent *>( event );
+
+                /*
+                   Adding/deleting additional event filters inside of an event filter
+                   is not safe dues to the implementation in Qt ( changing alist while iterating ).
+                   So we create the overlays in a way, that they don't install en event filter
+                   ( parent set to NULL ) and do the resizing here.
+                 */
+                if ( d_data->trackerOverlay )
+                    d_data->trackerOverlay->resize( re->size() );
+
+                if ( d_data->rubberBandOverlay )
+                    d_data->rubberBandOverlay->resize( re->size() );
+
                 if ( d_data->resizeMode == Stretch )
                     stretchSelection( re->oldSize(), re->size() );
 
+                updateDisplay();
                 break;
             }
             case QEvent::Enter:
@@ -1505,8 +1516,9 @@ void QwtPicker2::updateDisplay()
     {
         if ( rw.isNull() )
         {
-            rw = new QwtPicker2Rubberband( this, w );
+            rw = new QwtPicker2Rubberband( this, NULL ); // NULL -> no extra event filter
             rw->setObjectName( "PickerRubberBand" );
+            rw->setParent( w );
             rw->resize( w->size() );
         }
 
@@ -1540,8 +1552,9 @@ void QwtPicker2::updateDisplay()
     {
         if ( tw.isNull() )
         {
-            tw = new QwtPicker2Tracker( this, w );
+            tw = new QwtPicker2Tracker( this, NULL ); // NULL -> no extra event filter
             tw->setObjectName( "PickerTracker" );
+            tw->setParent( w );
             tw->resize( w->size() );
         }
         tw->setFont( d_data->trackerFont );

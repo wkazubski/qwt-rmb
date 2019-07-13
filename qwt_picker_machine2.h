@@ -178,10 +178,10 @@ public:
 
   A common use case of QwtPickerDragLineMachine are pickers for
   distance measurements.
-  
+
   \sa QwtEventPattern::MousePatternCode, QwtEventPattern::KeyPatternCode
-*/              
-                    
+*/
+
 class QWT_EXPORT QwtPicker2DragLineMachine: public QwtPicker2Machine
 {
 public:

@@ -192,6 +192,9 @@ int QwtPlotPicker2::yAxis() const
 */
 QwtText QwtPlotPicker2::trackerText( const QPoint &pos ) const
 {
+    if ( plot() == NULL )
+        return QwtText();
+
     return trackerTextF( invTransform( pos ) );
 }
 
